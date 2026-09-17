@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#061737">
+  <meta name="description" content="An animated field guide for newly integrated civilizations, compiled by Regional Orientation Steward Leth.">
+  <title>A Human’s Guide to the Universe</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#chapter-content">Skip to chapter</a>
+  <div class="cosmos" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <main class="terminal-shell" id="app-shell">
+    <header class="topbar glass-panel">
+      <button class="brand-mark" id="home-button" type="button" aria-label="Open introduction"><span></span></button>
+      <div class="book-id">
+        <p>Regional Orientation Archive <i></i> Terra edition</p>
+        <h1>A Human’s Guide to the Universe</h1>
+      </div>
+      <nav class="top-actions" aria-label="Reading tools">
+        <button class="bubble-button active" id="read-mode" type="button" aria-pressed="true"><span aria-hidden="true">▤</span> Read</button>
+        <button class="bubble-button" id="listen-button" type="button" aria-pressed="false" aria-label="Play Exi narration"><span aria-hidden="true">◖</span> Listen</button>
+        <button class="icon-button" id="search-button" type="button" aria-label="Search the book" title="Search"><span aria-hidden="true">⌕</span></button>
+        <button class="icon-button" id="bookmark-button" type="button" aria-label="Bookmark this chapter" aria-pressed="false" title="Bookmark"><span aria-hidden="true">◇</span></button>
+        <button class="icon-button" id="settings-button" type="button" aria-label="Reading settings" aria-expanded="false" title="Reading settings"><span aria-hidden="true">◉</span></button>
+        <button class="icon-button wide-only" id="fullscreen-button" type="button" aria-label="Enter full screen" title="Full screen"><span aria-hidden="true">⛶</span></button>
+      </nav>
+    </header>
+
+    <aside class="chapter-rail glass-panel" id="chapter-rail" aria-label="Contents">
+      <div class="rail-heading">
+        <div><small>Field index</small><span>Contents</span></div>
+        <button class="rail-toggle" id="rail-toggle" type="button" aria-label="Collapse contents" aria-expanded="true">≡</button>
+      </div>
+      <nav class="chapter-nav" aria-label="Book chapters">
+        <ol id="chapter-list"></ol>
+      </nav>
+      <div class="rail-footer">
+        <span class="signal-dot"></span>
+        <p><strong>Archive online</strong><br><span id="bookmark-count">0 bookmarks</span></p>
+      </div>
+    </aside>
+
+    <section class="reader-pane glass-panel" id="reader-pane" aria-label="Chapter reader">
+      <article id="chapter-content" tabindex="-1" aria-live="polite">
+        <header class="chapter-header">
+          <div>
+            <p class="eyebrow" id="chapter-label"></p>
+            <h2 id="chapter-title"></h2>
+          </div>
+          <button class="mini-bookmark" id="inline-bookmark" type="button" aria-label="Bookmark this chapter" aria-pressed="false"><span aria-hidden="true">◇</span></button>
+        </header>
+        <div class="chapter-copy" id="chapter-copy"></div>
+        <div class="chapter-end" aria-hidden="true"><span></span><i></i><span></span></div>
+      </article>
+
+      <aside class="visual-pane" aria-label="Animated chapter diagram">
+        <div class="visual-heading">
+          <div><span id="visual-kicker">Live model</span><strong id="visual-title">Orientation map</strong></div>
+          <button class="motion-toggle" id="motion-toggle" type="button" aria-pressed="true"><i></i> Motion on</button>
+        </div>
+        <div class="diagram-stage" id="diagram-stage"></div>
+        <div class="visual-caption">
+          <p id="visual-caption"></p>
+          <div class="legend" id="visual-legend"></div>
+        </div>
+      </aside>
+    </section>
+
+    <footer class="transport glass-panel">
+      <button class="icon-button" id="previous-button" type="button" aria-label="Previous chapter">‹</button>
+      <button class="play-button" id="play-button" type="button" aria-label="Play Exi narration"><span aria-hidden="true">▶</span><span class="play-label">Play narration</span></button>
+      <div class="progress-wrap">
+        <div class="progress-meta"><span id="progress-label">Orientation</span><span id="progress-percent">0%</span></div>
+        <div class="progress-track" role="progressbar" aria-label="Book progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-fill"></span></div>
+      </div>
+      <output id="chapter-counter">0 / 42</output>
+      <button class="icon-button" id="next-button" type="button" aria-label="Next chapter">›</button>
+    </footer>
+  </main>
+
+  <dialog class="search-dialog" id="search-dialog" aria-labelledby="search-title">
+    <form method="dialog" class="search-card glass-panel">
+      <header><div><p>Archive query</p><h2 id="search-title">Search the field guide</h2></div><button class="icon-button" value="cancel" aria-label="Close search">×</button></header>
+      <label class="search-field"><span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Try “consciousness” or “grilled cheese”" autocomplete="off"></label>
+      <p class="search-status" id="search-status">Type a word or phrase.</p>
+      <ol class="search-results" id="search-results"></ol>
+    </form>
+  </dialog>
+
+  <noscript>This field guide needs JavaScript for chapter navigation and animation.</noscript>
+  <script src="book-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
