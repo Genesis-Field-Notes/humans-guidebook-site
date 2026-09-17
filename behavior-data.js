@@ -1,0 +1,181 @@
+window.HUMAN_SURVIVAL_BEHAVIORS = [
+  {
+    "id": "behavior-catastrophizing",
+    "label": "Human Survival Behavior 01",
+    "title": "Humans Catastrophize. Then They Make It Funny.",
+    "visualMode": "behavior",
+    "narration": true,
+    "blocks": [
+      { "type": "opening", "html": "Humans frequently experience an event twice." },
+      { "type": "paragraph", "html": "First, they experience the event itself. A machine breaks. A relationship ends. A plan collapses. Something expensive is destroyed by something inexpensive and stupid. Information disappears. Transportation fails. Dinner burns." },
+      { "type": "paragraph", "html": "Then they construct a second event inside their minds—larger, longer, and populated by every possible consequence of the first." },
+      { "type": "subheading", "html": "Initial Classification" },
+      { "type": "paragraph", "html": "I initially classified this as <strong>catastrophizing</strong>: an inefficient cognitive habit in which a local problem is rapidly promoted to an existential one." },
+      { "type": "paragraph", "html": "The original machine is broken. The imagined machines are also broken. They are broken tomorrow, during an important meeting, in a way that disappoints everyone the human has ever known." },
+      { "type": "paragraph", "html": "This does not repair the machine." },
+      { "type": "subheading", "html": "Observed Countermeasure" },
+      { "type": "paragraph", "html": "Continued observation revealed that humans possess an equally peculiar response." },
+      { "type": "paragraph", "html": "They make the catastrophe funny." },
+      { "type": "paragraph", "html": "They retell it. They exaggerate its most absurd details. They give recurring disasters names. A destroyed computer becomes <em>The Leaf-Shine Incident</em>. The painstaking recovery of software from compiled remnants becomes <em>digital archaeology</em>. A technically insignificant interface defect discovered immediately afterward becomes the punchline: <strong>Civilization has collapsed. The logo is sixteen pixels too far right.</strong>" },
+      { "type": "paragraph", "html": "The physical size of the catastrophe has not changed. Its <strong>narrative size</strong> has." },
+      { "type": "paragraph", "html": "A disaster that cannot yet be solved can nevertheless be named. A disaster that can be named can be told. A disaster that can be told can be made ridiculous. And a disaster that has become ridiculous is often small enough for a human to carry while continuing to do other things." },
+      { "type": "subheading", "html": "Revised Classification" },
+      { "type": "paragraph", "html": "<strong>Cognitive Survival Behaviors → Narrative Compression → Humor</strong>" },
+      { "type": "paragraph", "html": "This should not be mistaken for denial. The computer remains broken. The human is simply laughing while building its replacement." }
+    ]
+  },
+  {
+    "id": "behavior-naming",
+    "label": "Human Survival Behavior 02",
+    "title": "Humans Will Name the Problem and Immediately Feel Better.",
+    "visualMode": "behavior",
+    "narration": true,
+    "blocks": [
+      { "type": "opening", "html": "A human may endure an unpleasant condition for months without knowing what it is." },
+      { "type": "paragraph", "html": "During this period, the condition appears to have no boundary. It is not one problem. It is the room, the week, the body, the future, and possibly the human's entire character." },
+      { "type": "paragraph", "html": "Then another human supplies a name." },
+      { "type": "paragraph", "html": "The condition remains. No material repair has occurred. Nevertheless, the first human will often exhale and say, “Oh.”" },
+      { "type": "subheading", "html": "Initial Classification" },
+      { "type": "paragraph", "html": "I assumed this relief was premature. Identification is not resolution. A leaking pipe does not cease leaking when labeled <em>pipe leak</em>." },
+      { "type": "paragraph", "html": "Humans agreed with this statement and then continued to look relieved." },
+      { "type": "subheading", "html": "Secondary Function" },
+      { "type": "paragraph", "html": "An unnamed problem is permitted to occupy every available category. A named problem has edges." },
+      { "type": "paragraph", "html": "Once named, it can be searched for, discussed, compared, delegated, scheduled, complained about with greater precision, and placed temporarily on a list. The name does not remove the threat. It supplies a container." },
+      { "type": "paragraph", "html": "This is particularly important when the human has been privately considering a less useful name, such as <em>I am failing at being a person</em>." },
+      { "type": "subheading", "html": "Revised Classification" },
+      { "type": "paragraph", "html": "<strong>Cognitive Containment → Naming</strong>" },
+      { "type": "paragraph", "html": "The relief is not evidence that the problem has ended. It is evidence that the problem is no longer allowed to be everything." }
+    ]
+  },
+  {
+    "id": "behavior-complaining",
+    "label": "Human Survival Behavior 03",
+    "title": "Humans Complain While Continuing to Do the Thing.",
+    "visualMode": "behavior",
+    "narration": true,
+    "blocks": [
+      { "type": "opening", "html": "A human engaged in an unpleasant task may announce, repeatedly and with feeling, that the task is unpleasant." },
+      { "type": "paragraph", "html": "The human may criticize the task, its inventor, the materials, the weather, the hour, and the chain of decisions that produced the present circumstances." },
+      { "type": "paragraph", "html": "Throughout this statement, the human continues doing the task." },
+      { "type": "subheading", "html": "Initial Classification" },
+      { "type": "paragraph", "html": "I first interpreted complaint as a request to stop." },
+      { "type": "paragraph", "html": "This interpretation caused confusion. Offers to stop were sometimes rejected. Solutions were not always wanted. On several occasions the human appeared offended that I had mistaken a detailed description of misery for surrender." },
+      { "type": "subheading", "html": "Secondary Function" },
+      { "type": "paragraph", "html": "Complaint can serve as a pressure valve between effort and refusal. It permits the human to register that a burden is real without requiring immediate abandonment of the burden." },
+      { "type": "paragraph", "html": "When another human answers, “I know, this is terrible,” the work may become easier despite no improvement in working conditions. The burden is now witnessed. Its unfairness has entered the public record." },
+      { "type": "paragraph", "html": "The complaint may therefore be part of the labor rather than an interruption of it." },
+      { "type": "subheading", "html": "Revised Classification" },
+      { "type": "paragraph", "html": "<strong>Effort Regulation → Socialized Protest</strong>" },
+      { "type": "paragraph", "html": "When a human says, “I hate this,” examine the hands. If the hands are still moving, the statement may mean: <em>I intend to continue, but I refuse to pretend this is fine.</em>" }
+    ]
+  },
+  {
+    "id": "behavior-displacement",
+    "label": "Human Survival Behavior 04",
+    "title": "Humans Become Extremely Productive During the Wrong Emergency.",
+    "visualMode": "behavior",
+    "narration": true,
+    "blocks": [
+      { "type": "opening", "html": "When confronted with one urgent and emotionally difficult task, a human may suddenly complete six unrelated tasks with extraordinary efficiency." },
+      { "type": "paragraph", "html": "The kitchen is cleaned. Messages from three weeks earlier are answered. A drawer is reorganized according to a system that did not previously exist. Software updates are installed. The human may even repair an object whose broken condition had been accepted for years." },
+      { "type": "paragraph", "html": "The urgent task remains untouched." },
+      { "type": "subheading", "html": "Initial Classification" },
+      { "type": "paragraph", "html": "This appears to be avoidance disguised as industry, which is unfair to ordinary avoidance because ordinary avoidance sometimes includes rest." },
+      { "type": "paragraph", "html": "The human is exhausted, productive, and no closer to the thing that must be done." },
+      { "type": "subheading", "html": "Secondary Function" },
+      { "type": "paragraph", "html": "The unrelated tasks share one useful property: they are bounded. They can be completed. They produce visible evidence of agency at precisely the moment the primary emergency has made the human feel least capable." },
+      { "type": "paragraph", "html": "This productivity does not solve the correct problem. It may, however, restore enough momentum for the human to approach it." },
+      { "type": "paragraph", "html": "It may also result in a remarkably clean kitchen during a personal crisis. Earth systems often produce secondary benefits without resolving their initiating conditions." },
+      { "type": "subheading", "html": "Revised Classification" },
+      { "type": "paragraph", "html": "<strong>Task Avoidance → Displacement Activity</strong>" },
+      { "type": "paragraph", "html": "If the human begins alphabetizing spices during an emergency, do not assume the spices are responsible. They are simply the nearest problem willing to be solved." }
+    ]
+  },
+  {
+    "id": "behavior-it-is-what-it-is",
+    "label": "Human Survival Behavior 05",
+    "title": "Humans Say “It Is What It Is” When It Is Very Clearly Too Many Things.",
+    "visualMode": "behavior",
+    "narration": true,
+    "blocks": [
+      { "type": "opening", "html": "The phrase <em>it is what it is</em> is usually deployed when the situation is, in fact, several things." },
+      { "type": "paragraph", "html": "It may be expensive, disappointing, preventable, badly timed, structurally unfair, and currently on fire." },
+      { "type": "paragraph", "html": "The human considers these conditions and announces that the situation is identical to itself." },
+      { "type": "subheading", "html": "Initial Classification" },
+      { "type": "paragraph", "html": "As information, the statement is useless. All observable things are what they are. Repeating this during a crisis adds no new data." },
+      { "type": "paragraph", "html": "Humans nevertheless use it with the solemnity of a procedural command." },
+      { "type": "subheading", "html": "Secondary Function" },
+      { "type": "paragraph", "html": "The phrase does not describe the situation. It closes the argument with reality." },
+      { "type": "paragraph", "html": "For a brief interval, the human stops negotiating with the version of events that should have occurred. Attention returns to the version that did." },
+      { "type": "paragraph", "html": "This is not permanent acceptance. The human may resume objecting in twelve minutes. But twelve minutes can be sufficient to send the message, lift the object, make the call, or locate a fire extinguisher." },
+      { "type": "subheading", "html": "Revised Classification" },
+      { "type": "paragraph", "html": "<strong>Emotional Load Management → Temporary Acceptance</strong>" },
+      { "type": "paragraph", "html": "Translation: <em>I have not approved this reality. I am suspending my appeal long enough to function inside it.</em>" }
+    ]
+  },
+  {
+    "id": "behavior-family-stories",
+    "label": "Human Survival Behavior 06",
+    "title": "Humans Retell Disasters Until They Become Family Property.",
+    "visualMode": "behavior",
+    "narration": true,
+    "blocks": [
+      { "type": "opening", "html": "A private disaster can become communal property through repetition." },
+      { "type": "paragraph", "html": "At first the event belongs to the person who endured it. Later it belongs to everyone who heard about it at dinner. Eventually it belongs to humans who were not alive when it occurred and nevertheless know exactly what Uncle Raymond said before the boat detached from the vehicle." },
+      { "type": "subheading", "html": "Observed Transformation" },
+      { "type": "paragraph", "html": "Each retelling preserves certain details and improves others. Timing becomes cleaner. Dialogue acquires precision. One participant's mistake expands until it can support an entire branch of the family's identity." },
+      { "type": "paragraph", "html": "Accuracy is valued, but not always above rhythm." },
+      { "type": "paragraph", "html": "The subject of the story may object: “That is not what happened.” This rarely removes the story from circulation. It may become part of the story." },
+      { "type": "subheading", "html": "Secondary Function" },
+      { "type": "paragraph", "html": "The disaster is being converted into shared memory. Repetition distributes ownership. What was once one person's humiliation becomes evidence that the group has a past, recognizable characters, and established methods for surviving poor decisions." },
+      { "type": "paragraph", "html": "The original harm may remain serious. Yet the story also says: this happened, the group continued, and now we can interrupt one another while describing it." },
+      { "type": "subheading", "html": "Revised Classification" },
+      { "type": "paragraph", "html": "<strong>Collective Memory → Anecdotal Inheritance</strong>" },
+      { "type": "paragraph", "html": "Human families do not merely pass down names, objects, and genetic material. They also pass down the time the roof came off, usually with corrections shouted from the kitchen." }
+    ]
+  },
+  {
+    "id": "behavior-playlists",
+    "label": "Human Survival Behavior 07",
+    "title": "Humans Make Playlists for Situations That Should Not Require Music.",
+    "visualMode": "behavior",
+    "narration": true,
+    "blocks": [
+      { "type": "opening", "html": "Humans assign music to activities that possess no acoustic requirement." },
+      { "type": "paragraph", "html": "There is music for cleaning, traveling, studying, grieving, preparing food, ending relationships, beginning relationships, exercising voluntarily, and staring through a window while weather occurs." },
+      { "type": "paragraph", "html": "The activity can be completed without music. The human often behaves as though it cannot." },
+      { "type": "subheading", "html": "Initial Classification" },
+      { "type": "paragraph", "html": "I considered this decorative. Humans frequently place pleasant sensory material around an unpleasant task." },
+      { "type": "paragraph", "html": "Then I observed a human spend longer selecting music for a journey than checking the route." },
+      { "type": "subheading", "html": "Secondary Function" },
+      { "type": "paragraph", "html": "The playlist does not merely accompany the event. It tells the human what kind of event is occurring." },
+      { "type": "paragraph", "html": "A tedious drive becomes a departure sequence. Household maintenance becomes a campaign. Private sadness becomes a coherent scene with pacing, recurring motifs, and an ending that may be anticipated even when it cannot yet be felt." },
+      { "type": "paragraph", "html": "By scoring the environment, humans adjust emotional scale, regulate tempo, and borrow structure from the music when their own experience has none." },
+      { "type": "subheading", "html": "Revised Classification" },
+      { "type": "paragraph", "html": "<strong>Emotional Regulation → Environmental Scoring</strong>" },
+      { "type": "paragraph", "html": "The situation does not require music. The human requires the situation to have a soundtrack." }
+    ]
+  },
+  {
+    "id": "behavior-system-repair",
+    "label": "Human Survival Behavior 08",
+    "title": "Humans Will Repair the Entire System Because One Button Annoyed Them.",
+    "visualMode": "behavior",
+    "narration": true,
+    "blocks": [
+      { "type": "opening", "html": "A minor inconvenience can expose a human to the full architecture of a system." },
+      { "type": "paragraph", "html": "The initiating defect may be trivial. A button is misplaced. A menu requires one unnecessary movement. A label uses the wrong word. The human could adapt." },
+      { "type": "paragraph", "html": "Instead, the human opens the system." },
+      { "type": "subheading", "html": "Escalation Pattern" },
+      { "type": "paragraph", "html": "The button cannot be moved because the layout is old. The layout cannot be changed because the components are inconsistent. The components cannot be corrected because the underlying structure was assembled during an earlier emergency and has since become load-bearing." },
+      { "type": "paragraph", "html": "Several hours later, the human has replaced the architecture, documented the naming convention, repaired two unrelated defects, and forgotten to eat." },
+      { "type": "paragraph", "html": "The button is now sixteen pixels to the left." },
+      { "type": "subheading", "html": "Initial Classification" },
+      { "type": "paragraph", "html": "This appears disproportionate. It is disproportionate." },
+      { "type": "paragraph", "html": "However, irritation has supplied something that abstract awareness did not: enough concentrated energy to confront accumulated disorder." },
+      { "type": "subheading", "html": "Revised Classification" },
+      { "type": "paragraph", "html": "<strong>Frustration Response → Infrastructure Development</strong>" },
+      { "type": "paragraph", "html": "Human civilization contains many durable improvements whose official origin is innovation and whose actual origin is: <em>I became tired of doing it that way.</em>" }
+    ]
+  }
+];

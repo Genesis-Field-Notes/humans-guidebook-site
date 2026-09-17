@@ -4,7 +4,10 @@
   const book = window.BOOK_DATA;
   if (!book?.sections?.length) throw new Error("Book content could not be loaded.");
 
-  const sections = book.sections;
+  const behaviorSections = Array.isArray(window.HUMAN_SURVIVAL_BEHAVIORS) ? window.HUMAN_SURVIVAL_BEHAVIORS : [];
+  const sections = [...book.sections];
+  const behaviorInsertAt = sections.findIndex((section) => section.id === "chapter-14");
+  sections.splice(behaviorInsertAt < 0 ? sections.length : behaviorInsertAt, 0, ...behaviorSections);
   const storage = {
     read(key, fallback) {
       try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
@@ -60,8 +63,9 @@
   toast.setAttribute("role", "status");
   document.body.append(toast);
 
-  const narration = new Audio();
-  narration.preload = "metadata";
+  const narration = $("#narration-audio");
+  narration.preload = "none";
+  narration.playsInline = true;
 
   function plain(html) {
     const node = document.createElement("div");
@@ -73,6 +77,7 @@
     if (section.id === "introduction") return "00";
     if (section.id === "appendix") return "A";
     if (section.label.startsWith("Earth Cuisine ")) return `C${section.label.split(" ").at(-1).replace(/^0/, "")}`;
+    if (section.label.startsWith("Human Survival Behavior ")) return `B${section.label.split(" ").at(-1).replace(/^0/, "")}`;
     if (section.id === "field-note-pointing") return "PT";
     return String(section.number).padStart(2, "0");
   }
@@ -164,6 +169,7 @@
     perception: ["Cuisine model", "The cake uncertainty problem", "Visual evidence becomes unreliable when cake reproduces the surface properties of ordinary objects.", [["cyan","Observed object"],["yellow","Visual evidence"],["lime","Cake"],["coral","Uncertainty"]]],
     stimulant: ["Cuisine model", "Borrowed wakefulness", "A plant defense occupies fatigue receptors, temporarily changing the human experience of alertness.", [["cyan","Plant compound"],["yellow","Receptor"],["lime","Alertness"],["coral","Deferred fatigue"]]],
     chemistry: ["Cuisine model", "Compatible chemistry", "Independent evolutionary histories produced molecules capable of interacting across species.", [["cyan","Plant chemistry"],["yellow","Molecular fit"],["lime","Human system"],["coral","Independent evolution"]]],
+    behavior: ["Behavior model", "From burden to usable form", "Humans rarely remove the original difficulty. They change its shape until action becomes possible again.", [["coral","Raw difficulty"],["yellow","Human response"],["cyan","Narrative form"],["lime","Continued action"]]],
   };
 
   function defs() {
@@ -179,6 +185,14 @@
   }
 
   function diagramMarkup(mode) {
+    if (mode === "behavior") return baseSvg(`
+      <text class="diagram-label" x="38" y="58">RAW DIFFICULTY</text><text class="diagram-label" x="370" y="58">CONTINUED ACTION</text>
+      <path class="route coral" d="M82 142 C176 142 177 210 260 210"/><path class="route yellow" d="M260 210 C343 210 344 278 438 278"/>
+      <path class="route lime" d="M82 278 C176 278 177 210 260 210 C343 210 344 142 438 142"/>
+      <g filter="url(#glow)"><circle class="node coral" cx="82" cy="142" r="26"/><circle class="node yellow" cx="260" cy="210" r="39"/><circle class="node cyan" cx="82" cy="278" r="20"/><circle class="node lime" cx="438" cy="142" r="26"/><circle class="node cyan" cx="438" cy="278" r="20"/></g>
+      <text class="diagram-small" x="215" y="205">ADAPTIVE</text><text class="diagram-small" x="218" y="224">RESPONSE</text><text class="diagram-small" x="42" y="327">NARRATIVE FORM</text><text class="diagram-small" x="380" y="327">BURDEN CARRIED</text>
+      <circle class="packet" r="6"><animateMotion dur="4s" repeatCount="indefinite" path="M82 278 C176 278 177 210 260 210 C343 210 344 142 438 142"/></circle>`, "A difficult event transformed through an adaptive human response into a form that permits continued action");
+
     if (mode === "food-chain") return baseSvg(`
       <text class="diagram-label" x="49" y="58">SOURCE SYSTEM</text><text class="diagram-label" x="377" y="58">HUMAN FOOD</text>
       <path class="route coral" d="M92 210 C171 111 344 111 428 210"/><path class="route lime" d="M92 210 C174 309 346 309 428 210"/>
@@ -437,7 +451,9 @@
 
   function stopNarration() {
     narration.pause();
-    narration.currentTime = 0;
+    if (narration.readyState > HTMLMediaElement.HAVE_NOTHING) {
+      try { narration.currentTime = 0; } catch { /* Mobile browsers may not expose a seekable range yet. */ }
+    }
     state.narrationSection = null;
     updateNarrationControls(false);
   }
@@ -454,22 +470,25 @@
       return;
     }
     if (state.narrationSection !== section.id) {
-      narration.src = `audio/${section.id}.mp3`;
+      narration.src = new URL(`audio/${section.id}.mp3`, document.baseURI).href;
+      narration.load();
       state.narrationSection = section.id;
     }
     try {
       await narration.play();
       updateNarrationControls(true);
-    } catch {
+    } catch (error) {
       updateNarrationControls(false);
-      notify("The Exi narration could not be played. Please try again.");
+      state.narrationSection = null;
+      notify(error?.name === "NotAllowedError" ? "Tap Listen again to allow narration." : "The Exi narration could not be loaded.");
     }
   }
 
   narration.addEventListener("ended", stopNarration);
   narration.addEventListener("error", () => {
+    state.narrationSection = null;
     updateNarrationControls(false);
-    notify("The Exi narration is unavailable for this entry.");
+    notify("The Exi narration could not be loaded.");
   });
 
   function applySettings() {
