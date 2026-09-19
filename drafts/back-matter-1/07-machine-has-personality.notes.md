@@ -1,6 +1,6 @@
 # Entry 7 — The Machine Has Developed a Personality.
 
-Status: approved concept; full draft pending
+Status: full draft approved; preserved as `07-machine-has-developed-a-personality.md`
 
 ## Primary field specimen: Black Betty
 
