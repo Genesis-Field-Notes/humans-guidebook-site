@@ -30,6 +30,8 @@ Working classification:
    Eponyms turn discovery, prestige, affection, power, and memory into linguistic territory.
 7. **The Machine Has Developed a Personality.**  
    Humans name machines after appearance, quirks, unreliability, shared history, and perceived temperament.
+8. **The Species Has Acquired a Personality.**  
+   Humans turn entire species into cultural characters: serene capybaras, belligerent kangaroos, criminal raccoons, hostile geese, and an Australian ecosystem perceived as acting with intent.
 
 ## Voice and emotional arc
 
