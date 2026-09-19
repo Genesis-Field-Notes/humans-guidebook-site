@@ -1,6 +1,6 @@
 # Entry 6 — Humans Name Things After Humans.
 
-Status: approved title and scope; full draft pending
+Status: full draft approved; preserved as `06-humans-name-things-after-humans.md`
 
 ## Scope
 
