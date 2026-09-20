@@ -5,9 +5,11 @@
   if (!book?.sections?.length) throw new Error("Book content could not be loaded.");
 
   const behaviorSections = Array.isArray(window.HUMAN_SURVIVAL_BEHAVIORS) ? window.HUMAN_SURVIVAL_BEHAVIORS : [];
+  const backMatterSections = Array.isArray(window.BACK_MATTER_ONE) ? window.BACK_MATTER_ONE : [];
   const sections = [...book.sections];
   const behaviorInsertAt = sections.findIndex((section) => section.id === "chapter-14");
   sections.splice(behaviorInsertAt < 0 ? sections.length : behaviorInsertAt, 0, ...behaviorSections);
+  sections.push(...backMatterSections);
   const storage = {
     read(key, fallback) {
       try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
@@ -78,6 +80,9 @@
     if (section.id === "appendix") return "A";
     if (section.label.startsWith("Earth Cuisine ")) return `C${section.label.split(" ").at(-1).replace(/^0/, "")}`;
     if (section.label.startsWith("Human Survival Behavior ")) return `B${section.label.split(" ").at(-1).replace(/^0/, "")}`;
+    if (section.id === "back-matter-1-introduction") return "BM1";
+    if (section.label.startsWith("Nomenclature Entry ")) return `N${section.label.split(" ").at(-1).replace(/^0/, "")}`;
+    if (section.id === "nomenclature-henry-atlantic") return "N7+";
     if (section.id === "field-note-pointing") return "PT";
     return String(section.number).padStart(2, "0");
   }
@@ -170,6 +175,7 @@
     stimulant: ["Cuisine model", "Borrowed wakefulness", "A plant defense occupies fatigue receptors, temporarily changing the human experience of alertness.", [["cyan","Plant compound"],["yellow","Receptor"],["lime","Alertness"],["coral","Deferred fatigue"]]],
     chemistry: ["Cuisine model", "Compatible chemistry", "Independent evolutionary histories produced molecules capable of interacting across species.", [["cyan","Plant chemistry"],["yellow","Molecular fit"],["lime","Human system"],["coral","Independent evolution"]]],
     behavior: ["Behavior model", "From burden to usable form", "Humans rarely remove the original difficulty. They change its shape until action becomes possible again.", [["coral","Raw difficulty"],["yellow","Human response"],["cyan","Narrative form"],["lime","Continued action"]]],
+    nomenclature: ["Nomenclature model", "The human spark", "Contact produces a reaction; naming preserves a trace of the human observer on the thing observed.", [["cyan","Observed thing"],["yellow","Human contact"],["coral","Emotional trace"],["lime","Name"]]],
   };
 
   function defs() {
@@ -185,6 +191,13 @@
   }
 
   function diagramMarkup(mode) {
+    if (mode === "nomenclature") return baseSvg(`
+      <text class="diagram-label" x="42" y="54">CONTACT LEAVES A TRACE</text>
+      <path class="route cyan" d="M82 210 C148 210 176 210 222 210"/><path class="route coral" d="M298 210 C344 210 372 210 438 210"/>
+      <g filter="url(#glow)"><circle class="node cyan" cx="82" cy="210" r="27"/><circle class="node yellow" cx="260" cy="210" r="39"/><circle class="node coral" cx="438" cy="210" r="27"/></g>
+      <path class="route lime" d="M260 249 C260 292 260 316 260 350"/><circle class="node lime" cx="260" cy="350" r="22"/>
+      <text class="diagram-small" x="40" y="263">OBSERVED THING</text><text class="diagram-small" x="220" y="205">HUMAN</text><text class="diagram-small" x="215" y="224">CONTACT</text><text class="diagram-small" x="390" y="263">REACTION</text><text class="diagram-label" x="235" y="393">NAME</text>`, "A nonhuman thing meets a human observer; the reaction survives as a name");
+
     if (mode === "behavior") return baseSvg(`
       <text class="diagram-label" x="38" y="58">RAW DIFFICULTY</text><text class="diagram-label" x="370" y="58">CONTINUED ACTION</text>
       <path class="route coral" d="M82 142 C176 142 177 210 260 210"/><path class="route yellow" d="M260 210 C343 210 344 278 438 278"/>

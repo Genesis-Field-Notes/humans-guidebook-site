@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const behaviorFile = path.join(root, "behavior-data.js");
+const backMatterFile = path.join(root, "back-matter-data.js");
 const audioDirectory = path.join(root, "audio");
 const voiceId = process.env.ELEVENLABS_VOICE_ID || "z78r5be3XfFdGOPQefrh";
 const modelId = process.env.ELEVENLABS_MODEL_ID || "eleven_multilingual_v2";
@@ -21,6 +22,7 @@ Usage:
   node scripts/generate-narration.mjs <section-id> --dry-run
   node scripts/generate-narration.mjs <section-id> [--force]
   node scripts/generate-narration.mjs --all-behaviors [--force]
+  node scripts/generate-narration.mjs --all-back-matter [--force]
 
 Environment:
   ELEVENLABS_API_KEY        required for generation
@@ -58,11 +60,11 @@ function narrationText(section) {
 }
 
 async function markNarrationReady(sectionId) {
-  const sections = await readAssignment(behaviorFile, "HUMAN_SURVIVAL_BEHAVIORS");
-  const section = sections.find((entry) => entry.id === sectionId);
-  if (!section) return;
-  section.narration = true;
-  await writeFile(behaviorFile, `window.HUMAN_SURVIVAL_BEHAVIORS = ${JSON.stringify(sections, null, 2)};\n`);
+  for (const [file, variableName] of [[behaviorFile,"HUMAN_SURVIVAL_BEHAVIORS"],[backMatterFile,"BACK_MATTER_ONE"]]) {
+    const sections=await readAssignment(file,variableName); const section=sections.find((entry)=>entry.id===sectionId);
+    if (!section) continue; section.narration=true;
+    await writeFile(file,`window.${variableName} = ${JSON.stringify(sections,null,2)};\n`); return;
+  }
 }
 
 async function generate(section, { force = false, dryRun = false } = {}) {
@@ -110,14 +112,15 @@ if (args.includes("--help") || args.includes("-h")) {
 }
 
 const behaviors = await readAssignment(behaviorFile, "HUMAN_SURVIVAL_BEHAVIORS");
+const backMatter = await readAssignment(backMatterFile, "BACK_MATTER_ONE");
 if (args.includes("--list")) {
-  for (const section of behaviors) console.log(`${section.id}\t${section.title}`);
+  for (const section of [...behaviors,...backMatter]) console.log(`${section.id}\t${section.title}`);
   process.exit(0);
 }
 
 const selected = args.includes("--all-behaviors")
   ? behaviors
-  : behaviors.filter((section) => section.id === args.find((arg) => !arg.startsWith("--")));
+  : args.includes("--all-back-matter") ? backMatter : [...behaviors,...backMatter].filter((section)=>section.id===args.find((arg)=>!arg.startsWith("--")));
 
 if (!selected.length) {
   help();

@@ -1,6 +1,6 @@
 # Entry 8 — The Species Has Acquired a Personality.
 
-Status: approved concept; full draft pending
+Status: recovered reconstruction checkpointed after workspace maintenance removed the exact approved local draft
 
 ## Scope
 

@@ -14,6 +14,7 @@ Recovered application assets:
 - `book-data.js` — 56 recovered sections, including the introduction, 43 numbered chapters,
   10 Earth Cuisine entries, Pointing, and the appendix
 - `behavior-data.js` — 8 Human Survival Behavior field entries
+- `back-matter-data.js` — Back Matter I introduction, eight naming entries, and the Henry supplemental
 - `app.js` — navigation, search, bookmarks, narration, settings, and visual models
 - `styles.css` — complete site presentation
 - `favicon.svg`
@@ -48,6 +49,7 @@ node scripts/generate-narration.mjs --list
 node scripts/generate-narration.mjs behavior-catastrophizing --dry-run
 node scripts/generate-narration.mjs behavior-catastrophizing
 node scripts/generate-narration.mjs --all-behaviors
+node scripts/generate-narration.mjs --all-back-matter
 ```
 
 Existing audio is protected unless `--force` is supplied. The generator defaults
