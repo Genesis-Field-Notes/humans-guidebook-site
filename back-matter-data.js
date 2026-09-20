@@ -7117,7 +7117,7 @@ window.BACK_MATTER_ONE = [
     "label": "Nomenclature Entry 08",
     "title": "The Species Has Acquired a Personality.",
     "visualMode": "nomenclature",
-    "narration": false,
+    "narration": true,
     "blocks": [
       {
         "type": "opening",
