@@ -27,6 +27,8 @@
     quiet: storage.read("leth-quiet", false),
     motion: storage.read("leth-motion", !window.matchMedia("(prefers-reduced-motion: reduce)").matches),
     narrationSection: null,
+    narrationPart: 0,
+    narrationSavedSecond: -1,
     searchBuilt: false,
   };
 
@@ -452,6 +454,7 @@
   }
 
   function updateNarrationControls(playing = false) {
+    document.body.classList.toggle("narration-playing", playing);
     els.read.setAttribute("aria-pressed", "true");
     els.read.classList.add("active");
     els.listen.setAttribute("aria-pressed", String(playing));
@@ -462,13 +465,47 @@
     els.play.querySelector("span").textContent = playing ? "❚❚" : "▶";
   }
 
-  function stopNarration() {
+  function stopNarration({ savePosition = true } = {}) {
+    if (savePosition) saveNarrationPosition();
     narration.pause();
     if (narration.readyState > HTMLMediaElement.HAVE_NOTHING) {
       try { narration.currentTime = 0; } catch { /* Mobile browsers may not expose a seekable range yet. */ }
     }
     state.narrationSection = null;
+    state.narrationPart = 0;
     updateNarrationControls(false);
+  }
+
+  function narrationProgressKey(sectionId) {
+    return `leth-narration-progress-${sectionId}`;
+  }
+
+  function narrationSource(section, part = 0) {
+    const filename = section.narrationParts
+      ? `${section.id}-part-${String(part).padStart(2, "0")}.mp3`
+      : `${section.id}.mp3`;
+    return new URL(`audio/${filename}?v=20260920-1`, document.baseURI).href;
+  }
+
+  function saveNarrationPosition() {
+    if (!state.narrationSection || !Number.isFinite(narration.currentTime)) return;
+    const second = Math.floor(narration.currentTime);
+    if (second === state.narrationSavedSecond) return;
+    state.narrationSavedSecond = second;
+    storage.write(narrationProgressKey(state.narrationSection), { part: state.narrationPart, time: narration.currentTime });
+  }
+
+  function loadNarrationPart(section, part, resumeAt = 0) {
+    state.narrationSection = section.id;
+    state.narrationPart = part;
+    state.narrationSavedSecond = -1;
+    narration.src = narrationSource(section, part);
+    if (resumeAt > 0) {
+      narration.addEventListener("loadedmetadata", () => {
+        if (Number.isFinite(narration.duration)) narration.currentTime = Math.min(resumeAt, Math.max(0, narration.duration - .25));
+      }, { once: true });
+    }
+    narration.load();
   }
 
   async function toggleNarration() {
@@ -483,9 +520,11 @@
       return;
     }
     if (state.narrationSection !== section.id) {
-      narration.src = new URL(`audio/${section.id}.mp3?v=20260919-2`, document.baseURI).href;
-      narration.load();
-      state.narrationSection = section.id;
+      const saved = storage.read(narrationProgressKey(section.id), null);
+      const partCount = section.narrationParts || 1;
+      const part = Number.isInteger(saved?.part) && saved.part >= 0 && saved.part < partCount ? saved.part : 0;
+      const resumeAt = Number.isFinite(saved?.time) && saved.time > 0 ? saved.time : 0;
+      loadNarrationPart(section, part, resumeAt);
     }
     try {
       await narration.play();
@@ -497,12 +536,31 @@
     }
   }
 
-  narration.addEventListener("ended", stopNarration);
+  narration.addEventListener("timeupdate", saveNarrationPosition);
+  narration.addEventListener("ended", async () => {
+    const section = sections.find((entry) => entry.id === state.narrationSection);
+    const partCount = section?.narrationParts || 1;
+    if (section && state.narrationPart + 1 < partCount) {
+      loadNarrationPart(section, state.narrationPart + 1);
+      try {
+        await narration.play();
+        updateNarrationControls(true);
+      } catch {
+        updateNarrationControls(false);
+        notify("Tap Play narration to continue.");
+      }
+      return;
+    }
+    if (section) localStorage.removeItem(narrationProgressKey(section.id));
+    stopNarration({ savePosition: false });
+  });
   narration.addEventListener("error", () => {
+    saveNarrationPosition();
     state.narrationSection = null;
     updateNarrationControls(false);
-    notify("The Exi narration could not be loaded.");
+    notify("Narration paused. Tap Play narration to resume.");
   });
+  window.addEventListener("pagehide", saveNarrationPosition);
 
   function applySettings() {
     document.body.classList.toggle("font-small", state.font === "small");

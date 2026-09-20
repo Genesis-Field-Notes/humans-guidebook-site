@@ -5,6 +5,7 @@ window.BACK_MATTER_ONE = [
     "title": "After Contact: The Human Spark in the Names of Things",
     "visualMode": "nomenclature",
     "narration": true,
+    "narrationParts": 3,
     "blocks": [
       {
         "type": "subheading",
@@ -514,6 +515,7 @@ window.BACK_MATTER_ONE = [
     "title": "The Particle Is Strange. This Is Now Its Name.",
     "visualMode": "nomenclature",
     "narration": true,
+    "narrationParts": 4,
     "blocks": [
       {
         "type": "opening",
@@ -1155,6 +1157,7 @@ window.BACK_MATTER_ONE = [
     "title": "The Program Is Called What It Does.",
     "visualMode": "nomenclature",
     "narration": true,
+    "narrationParts": 3,
     "blocks": [
       {
         "type": "opening",
@@ -1636,6 +1639,7 @@ window.BACK_MATTER_ONE = [
     "title": "The First Specimen Is “Common.”",
     "visualMode": "nomenclature",
     "narration": true,
+    "narrationParts": 4,
     "blocks": [
       {
         "type": "opening",
@@ -2241,6 +2245,7 @@ window.BACK_MATTER_ONE = [
     "title": "The Name Is Wrong. It Has Seniority.",
     "visualMode": "nomenclature",
     "narration": true,
+    "narrationParts": 4,
     "blocks": [
       {
         "type": "opening",
@@ -2906,6 +2911,7 @@ window.BACK_MATTER_ONE = [
     "title": "It Resembled a Horse from One Direction.",
     "visualMode": "nomenclature",
     "narration": true,
+    "narrationParts": 5,
     "blocks": [
       {
         "type": "opening",
@@ -3871,6 +3877,7 @@ window.BACK_MATTER_ONE = [
     "title": "Humans Name Things After Humans.",
     "visualMode": "nomenclature",
     "narration": true,
+    "narrationParts": 6,
     "blocks": [
       {
         "type": "opening",
@@ -5072,6 +5079,7 @@ window.BACK_MATTER_ONE = [
     "title": "The Machine Has Developed a Personality.",
     "visualMode": "nomenclature",
     "narration": true,
+    "narrationParts": 6,
     "blocks": [
       {
         "type": "opening",
@@ -6233,6 +6241,7 @@ window.BACK_MATTER_ONE = [
     "title": "Henry Has Crossed the Atlantic.",
     "visualMode": "nomenclature",
     "narration": true,
+    "narrationParts": 5,
     "blocks": [
       {
         "type": "opening",
@@ -7118,6 +7127,7 @@ window.BACK_MATTER_ONE = [
     "title": "The Species Has Acquired a Personality.",
     "visualMode": "nomenclature",
     "narration": true,
+    "narrationParts": 4,
     "blocks": [
       {
         "type": "opening",

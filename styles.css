@@ -27,6 +27,8 @@ body.font-large { --reader-size: 1.22rem; }
 body.high-contrast .chapter-copy p, body.high-contrast .chapter-copy li { color: #fff; }
 body.quiet .cosmos { opacity: .12; }
 body.motion-paused *, body.motion-paused *::before, body.motion-paused *::after { animation-play-state: paused !important; }
+body.narration-playing *, body.narration-playing *::before, body.narration-playing *::after { animation-play-state: paused !important; }
+body.narration-playing .diagram-stage [filter] { filter: none !important; }
 button, input { font: inherit; }
 button { -webkit-tap-highlight-color: transparent; }
 button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
@@ -191,6 +193,7 @@ noscript { position: fixed; inset: auto 20px 20px; z-index: 1000; padding: 16px;
 
 @media (max-width: 880px) {
   body { overflow: auto; }
+  body.narration-playing .visual-pane { display: none; }
   .terminal-shell { width: calc(100vw - 12px); height: auto; min-height: calc(100dvh - 12px); margin: 6px; padding: 9px; grid-template: auto auto minmax(0,1fr) auto / minmax(0,1fr); border-radius: 24px; }
   .topbar { grid-template-columns: auto minmax(0,1fr); }.top-actions { grid-column: 1 / -1; padding-top: 10px; overflow-x: auto; }.top-actions .bubble-button { min-width: 95px; }
   .chapter-rail { grid-row: 2; min-height: auto; }.chapter-nav { overflow-x: auto; }.chapter-nav ol { display: flex; }.chapter-nav li { min-width: 218px; }.rail-footer { display: none; }
