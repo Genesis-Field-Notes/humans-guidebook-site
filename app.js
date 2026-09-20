@@ -483,7 +483,7 @@
       return;
     }
     if (state.narrationSection !== section.id) {
-      narration.src = new URL(`audio/${section.id}.mp3`, document.baseURI).href;
+      narration.src = new URL(`audio/${section.id}.mp3?v=20260919-2`, document.baseURI).href;
       narration.load();
       state.narrationSection = section.id;
     }
