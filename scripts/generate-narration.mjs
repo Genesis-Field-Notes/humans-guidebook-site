@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 
-import { readFile, rename, unlink, writeFile } from "node:fs/promises";
+import { mkdtemp, readFile, rename, rm, unlink, writeFile } from "node:fs/promises";
+import { execFile } from "node:child_process";
 import path from "node:path";
 import process from "node:process";
+import os from "node:os";
+import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -12,6 +15,8 @@ const audioDirectory = path.join(root, "audio");
 const voiceId = process.env.ELEVENLABS_VOICE_ID || "z78r5be3XfFdGOPQefrh";
 const modelId = process.env.ELEVENLABS_MODEL_ID || "eleven_multilingual_v2";
 const outputFormat = process.env.ELEVENLABS_OUTPUT_FORMAT || "mp3_44100_128";
+const ffmpegPath = process.env.FFMPEG_PATH || "ffmpeg";
+const runFile = promisify(execFile);
 const args = process.argv.slice(2);
 
 function help() {
@@ -59,6 +64,35 @@ function narrationText(section) {
   return parts.join("\n\n");
 }
 
+function narrationChunks(text, maximumLength = 9500) {
+  const paragraphs = text.split(/\n\n+/);
+  const chunks = [];
+  let current = "";
+  for (const paragraph of paragraphs) {
+    if (paragraph.length > maximumLength) throw new Error(`A narration paragraph exceeds ${maximumLength} characters.`);
+    const candidate = current ? `${current}\n\n${paragraph}` : paragraph;
+    if (candidate.length <= maximumLength) current = candidate;
+    else {
+      chunks.push(current);
+      current = paragraph;
+    }
+  }
+  if (current) chunks.push(current);
+  return chunks;
+}
+
+async function synthesize(text, apiKey) {
+  const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(voiceId)}?output_format=${encodeURIComponent(outputFormat)}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "xi-api-key": apiKey },
+    body: JSON.stringify({ text, model_id: modelId })
+  });
+  if (!response.ok) throw new Error(`ElevenLabs returned ${response.status}: ${(await response.text()).slice(0, 500)}`);
+  const audio = Buffer.from(await response.arrayBuffer());
+  if (audio.length < 1024) throw new Error("ElevenLabs returned an unexpectedly small audio file.");
+  return audio;
+}
+
 async function markNarrationReady(sectionId) {
   for (const [file, variableName] of [[behaviorFile,"HUMAN_SURVIVAL_BEHAVIORS"],[backMatterFile,"BACK_MATTER_ONE"]]) {
     const sections=await readAssignment(file,variableName); const section=sections.find((entry)=>entry.id===sectionId);
@@ -86,16 +120,29 @@ async function generate(section, { force = false, dryRun = false } = {}) {
     }
   }
 
-  const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(voiceId)}?output_format=${encodeURIComponent(outputFormat)}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "xi-api-key": apiKey },
-    body: JSON.stringify({ text, model_id: modelId })
-  });
-  if (!response.ok) throw new Error(`ElevenLabs returned ${response.status}: ${(await response.text()).slice(0, 500)}`);
-  const audio = Buffer.from(await response.arrayBuffer());
-  if (audio.length < 1024) throw new Error("ElevenLabs returned an unexpectedly small audio file.");
   const temporary = `${destination}.tmp`;
-  await writeFile(temporary, audio);
+  const chunks = narrationChunks(text);
+  let audio;
+  if (chunks.length === 1) {
+    audio = await synthesize(chunks[0], apiKey);
+    await writeFile(temporary, audio);
+  } else {
+    const temporaryDirectory = await mkdtemp(path.join(os.tmpdir(), "guidebook-narration-"));
+    try {
+      const partFiles = [];
+      for (let index = 0; index < chunks.length; index += 1) {
+        const part = path.join(temporaryDirectory, `part-${String(index).padStart(3, "0")}.mp3`);
+        await writeFile(part, await synthesize(chunks[index], apiKey));
+        partFiles.push(part);
+      }
+      const concatFile = path.join(temporaryDirectory, "concat.txt");
+      await writeFile(concatFile, partFiles.map((part) => `file '${part.replaceAll("'", "'\\''")}'`).join("\n"));
+      await runFile(ffmpegPath, ["-hide_banner", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", concatFile, "-c", "copy", "-f", "mp3", "-y", temporary]);
+      audio = await readFile(temporary);
+    } finally {
+      await rm(temporaryDirectory, { recursive: true, force: true });
+    }
+  }
   try {
     await rename(temporary, destination);
   } catch (error) {

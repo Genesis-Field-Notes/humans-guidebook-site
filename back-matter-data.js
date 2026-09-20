@@ -4,7 +4,7 @@ window.BACK_MATTER_ONE = [
     "label": "Back Matter I",
     "title": "After Contact: The Human Spark in the Names of Things",
     "visualMode": "nomenclature",
-    "narration": false,
+    "narration": true,
     "blocks": [
       {
         "type": "subheading",
@@ -513,7 +513,7 @@ window.BACK_MATTER_ONE = [
     "label": "Nomenclature Entry 01",
     "title": "The Particle Is Strange. This Is Now Its Name.",
     "visualMode": "nomenclature",
-    "narration": false,
+    "narration": true,
     "blocks": [
       {
         "type": "opening",
@@ -1154,7 +1154,7 @@ window.BACK_MATTER_ONE = [
     "label": "Nomenclature Entry 02",
     "title": "The Program Is Called What It Does.",
     "visualMode": "nomenclature",
-    "narration": false,
+    "narration": true,
     "blocks": [
       {
         "type": "opening",
@@ -1635,7 +1635,7 @@ window.BACK_MATTER_ONE = [
     "label": "Nomenclature Entry 03",
     "title": "The First Specimen Is “Common.”",
     "visualMode": "nomenclature",
-    "narration": false,
+    "narration": true,
     "blocks": [
       {
         "type": "opening",
@@ -2240,7 +2240,7 @@ window.BACK_MATTER_ONE = [
     "label": "Nomenclature Entry 04",
     "title": "The Name Is Wrong. It Has Seniority.",
     "visualMode": "nomenclature",
-    "narration": false,
+    "narration": true,
     "blocks": [
       {
         "type": "opening",
@@ -2905,7 +2905,7 @@ window.BACK_MATTER_ONE = [
     "label": "Nomenclature Entry 05",
     "title": "It Resembled a Horse from One Direction.",
     "visualMode": "nomenclature",
-    "narration": false,
+    "narration": true,
     "blocks": [
       {
         "type": "opening",
@@ -3870,7 +3870,7 @@ window.BACK_MATTER_ONE = [
     "label": "Nomenclature Entry 06",
     "title": "Humans Name Things After Humans.",
     "visualMode": "nomenclature",
-    "narration": false,
+    "narration": true,
     "blocks": [
       {
         "type": "opening",
@@ -5071,7 +5071,7 @@ window.BACK_MATTER_ONE = [
     "label": "Nomenclature Entry 07",
     "title": "The Machine Has Developed a Personality.",
     "visualMode": "nomenclature",
-    "narration": false,
+    "narration": true,
     "blocks": [
       {
         "type": "opening",
@@ -6232,7 +6232,7 @@ window.BACK_MATTER_ONE = [
     "label": "Supplemental Field Entry",
     "title": "Henry Has Crossed the Atlantic.",
     "visualMode": "nomenclature",
-    "narration": false,
+    "narration": true,
     "blocks": [
       {
         "type": "opening",
