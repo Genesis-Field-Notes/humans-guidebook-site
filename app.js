@@ -484,7 +484,7 @@
     const filename = section.narrationParts
       ? `${section.id}-part-${String(part).padStart(2, "0")}.mp3`
       : `${section.id}.mp3`;
-    return new URL(`audio/${filename}?v=20260920-1`, document.baseURI).href;
+    return new URL(`audio/${filename}?v=20260923-1`, document.baseURI).href;
   }
 
   function saveNarrationPosition() {

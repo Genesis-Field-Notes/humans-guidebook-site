@@ -9,6 +9,7 @@ import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const bookFile = path.join(root, "book-data.js");
 const behaviorFile = path.join(root, "behavior-data.js");
 const backMatterFile = path.join(root, "back-matter-data.js");
 const audioDirectory = path.join(root, "audio");
@@ -28,6 +29,7 @@ Usage:
   node scripts/generate-narration.mjs <section-id> [--force]
   node scripts/generate-narration.mjs --all-behaviors [--force]
   node scripts/generate-narration.mjs --all-back-matter [--force]
+  node scripts/generate-narration.mjs --all-cuisine [--force]
 
 Environment:
   ELEVENLABS_API_KEY        required for generation
@@ -53,6 +55,13 @@ async function readAssignment(file, variableName) {
   const prefix = `window.${variableName} =`;
   if (!source.trimStart().startsWith(prefix)) throw new Error(`${path.basename(file)} is not a ${variableName} data file.`);
   return JSON.parse(source.trim().slice(prefix.length).replace(/;$/, "").trim());
+}
+
+function serializeAssignment(variableName, data) {
+  if (variableName !== "BOOK_DATA") return `window.${variableName} = ${JSON.stringify(data,null,2)};\n`;
+  const meta = JSON.stringify(data.meta);
+  const sections = data.sections.map((section) => JSON.stringify(section)).join(",\n");
+  return `window.${variableName} = {\"meta\":${meta},\"sections\":[${sections}]};\n`;
 }
 
 function narrationText(section) {
@@ -94,10 +103,11 @@ async function synthesize(text, apiKey) {
 }
 
 async function markNarrationReady(sectionId) {
-  for (const [file, variableName] of [[behaviorFile,"HUMAN_SURVIVAL_BEHAVIORS"],[backMatterFile,"BACK_MATTER_ONE"]]) {
-    const sections=await readAssignment(file,variableName); const section=sections.find((entry)=>entry.id===sectionId);
+  for (const [file, variableName] of [[bookFile,"BOOK_DATA"],[behaviorFile,"HUMAN_SURVIVAL_BEHAVIORS"],[backMatterFile,"BACK_MATTER_ONE"]]) {
+    const data=await readAssignment(file,variableName); const sections=Array.isArray(data) ? data : data.sections;
+    const section=sections.find((entry)=>entry.id===sectionId);
     if (!section) continue; section.narration=true;
-    await writeFile(file,`window.${variableName} = ${JSON.stringify(sections,null,2)};\n`); return;
+    await writeFile(file,serializeAssignment(variableName,data)); return;
   }
 }
 
@@ -158,16 +168,20 @@ if (args.includes("--help") || args.includes("-h")) {
   process.exit(0);
 }
 
+const book = await readAssignment(bookFile, "BOOK_DATA");
+const cuisine = book.sections.filter((section) => section.label?.startsWith("Earth Cuisine "));
 const behaviors = await readAssignment(behaviorFile, "HUMAN_SURVIVAL_BEHAVIORS");
 const backMatter = await readAssignment(backMatterFile, "BACK_MATTER_ONE");
 if (args.includes("--list")) {
-  for (const section of [...behaviors,...backMatter]) console.log(`${section.id}\t${section.title}`);
+  for (const section of [...cuisine,...behaviors,...backMatter]) console.log(`${section.id}\t${section.title}`);
   process.exit(0);
 }
 
 const selected = args.includes("--all-behaviors")
   ? behaviors
-  : args.includes("--all-back-matter") ? backMatter : [...behaviors,...backMatter].filter((section)=>section.id===args.find((arg)=>!arg.startsWith("--")));
+  : args.includes("--all-back-matter") ? backMatter
+    : args.includes("--all-cuisine") ? cuisine
+      : [...cuisine,...behaviors,...backMatter].filter((section)=>section.id===args.find((arg)=>!arg.startsWith("--")));
 
 if (!selected.length) {
   help();
